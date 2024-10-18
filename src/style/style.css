@@ -1,0 +1,35 @@
+html, body {
+  height: 100%; /* Potrebno za 100% visinu stranice */
+  margin: 0;
+}
+
+.app-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Obezbeđuje da wrapper zauzima celu visinu ekrana */
+}
+
+main {
+  flex: 1; /* Omogućava da glavni sadržaj zauzme sav preostali prostor */
+}
+
+footer {
+  background-color: #343a40; /* Primer stila za footer */
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.card {
+    transition: transform 0.2s; /* Efekat na hover */
+  }
+  
+.card:hover {
+  transform: scale(1.05); /* Povećanje na hover */
+}
+
+.cart-controls {
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
