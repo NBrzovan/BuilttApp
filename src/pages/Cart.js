@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2'; 
+import backIcon from "../images/back.png";
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
@@ -7,9 +8,19 @@ const Cart = () => {
   const [cartDiscount, setCartDiscount] = useState(0);
 
   useEffect(() => {
-    const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-    setCartItems(storedCartItems);
-    calculateTotal(storedCartItems);
+    const fetchCartItems = () => {
+      const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+      setCartItems(storedCartItems);
+      calculateTotal(storedCartItems);
+    };
+
+    fetchCartItems();
+
+    window.addEventListener('storage', fetchCartItems);
+
+    return () => {
+      window.removeEventListener('storage', fetchCartItems);
+    };
   }, []);
 
   const calculateTotal = (items) => {
@@ -32,6 +43,8 @@ const Cart = () => {
     setCartItems(updatedCart);
     localStorage.setItem('cartItems', JSON.stringify(updatedCart));
     calculateTotal(updatedCart);
+    
+    window.dispatchEvent(new Event('storage'));
   };
 
   const decreaseQuantity = (itemId) => {
@@ -41,6 +54,8 @@ const Cart = () => {
     setCartItems(updatedCart);
     localStorage.setItem('cartItems', JSON.stringify(updatedCart));
     calculateTotal(updatedCart);
+
+    window.dispatchEvent(new Event('storage'));
   };
 
   const removeFromCart = (itemId) => {
@@ -48,6 +63,8 @@ const Cart = () => {
     setCartItems(updatedCart);
     localStorage.setItem('cartItems', JSON.stringify(updatedCart));
     calculateTotal(updatedCart);
+
+    window.dispatchEvent(new Event('storage'));
   };
 
   const inProgress = () => {
@@ -57,12 +74,12 @@ const Cart = () => {
       icon: 'success',
       confirmButtonText: 'U redu'
     });
-  }
+  };
 
   return (
     <div className="container mt-5">
       <h2 className="mb-4">Tvoja korpa</h2>
-      <a href="/products">Vrati se na proizvode</a>
+      <a href="/products" className="d-inline-flex align-items-center text-decoration-none"><img src={backIcon} alt="backIcon" /> Vrati se na proizvode</a>
       <div className="row mt-3">
         <div className="col-lg-8">
           {cartItems.length === 0 ? (

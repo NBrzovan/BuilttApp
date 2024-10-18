@@ -54,9 +54,9 @@ const Products = () => {
     } else {
       cartItems.push({ ...productToAdd, quantity: productToAdd.quantity || 1 });
     }
-
+  
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
-
+  
     setIsCartFull(cartItems.some(item => item.quantity > 0));
   
     Swal.fire({
@@ -65,6 +65,8 @@ const Products = () => {
       icon: 'success',
       confirmButtonText: 'U redu'
     });
+  
+    window.dispatchEvent(new Event('storage'));
   };
 
   return (
